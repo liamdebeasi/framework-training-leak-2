@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Triggers</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      body {
+        display: flex;
+
+        height: 100%;
+
+        align-items: center;
+
+        justify-content: center;
+      }
+
+      .container {
+        width: 300px;
+      }
+
+      ion-app.ion-page {
+        justify-content: center;
+        align-items: center;
+      }
+
+      ion-content::part(scroll) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button {
+        width: 100%;
+
+        background: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+
+        border-radius: 8px;
+
+        height: 44px;
+
+        font-size: 1rem;
+      }
+
+      button.border-button {
+        background: transparent;
+        color: var(--ion-color-primary);
+        border: 1px solid var(--ion-color-primary);
+      }
+
+      .small-text {
+        font-size: 8px;
+      }
+    </style>
+
+    <script>
+      window.addEventListener('appload', () => {
+        // remove stencil dev tools which can create false positive memory leaks
+        window.stencil = undefined;
+
+        // you can remove this if you need HMR when debugging, but it may cause false positive memory leaks
+        window.__STENCIL_HOSTREFS__ = undefined;
+      });
+    </script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <div class="container"></div>
+      </ion-content>
+
+      <script>
+        const container = document.querySelector('.container');
+
+        const submitForm = () => {
+          container.innerHTML = `
+            <h2>You've agreed to our terms of use!</h2>
+            <p class="small-text">We will now sell your information on the dark web.</p><br />
+            <button type="button">Go Back</button>
+          `;
+          container.querySelector('button').addEventListener('click', renderForm);
+        }
+
+        const renderForm = () => {
+          container.innerHTML = `
+            <button id="trigger" class="border-button">Open Terms of Service</button> <br /><br />
+            <button id="submit">Agree and Continue</button>
+            <ion-modal trigger="trigger">
+              <ion-content>Terms of Use</ion-content>
+            </ion-modal>
+          `;
+          container.querySelector('button#submit').addEventListener('click', submitForm);
+        }
+
+        renderForm();
+      </script>
+    </ion-app>
+  </body>
+</html>
